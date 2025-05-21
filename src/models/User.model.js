@@ -30,14 +30,8 @@ const remove = (id) => User.destroy({ where: { id } });
 
 const create = (name) => User.create({ name });
 
-const update = async (name, id) => {
-  const updatedUser = await User.update(
-    { name },
-    { where: { id }, returning: true, silent: true },
-  );
-
-  return updatedUser;
-};
+const update = (name, id) =>
+  User.update({ name }, { where: { id }, returning: true, silent: true });
 
 module.exports = {
   User,

@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
 
     res.send(data.map((d) => expensesServices.normalize(d)));
   } catch (error) {
-    res.status(400).send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -27,7 +27,7 @@ const getOne = async (req, res) => {
 
     res.send(expensesServices.normalize(expense));
   } catch (error) {
-    res.sendStatus(400);
+    res.sendStatus(500);
   }
 };
 
@@ -46,7 +46,7 @@ const remove = async (req, res) => {
     }
     res.sendStatus(204);
   } catch (error) {
-    res.sendStatus(404);
+    res.sendStatus(500);
   }
 };
 
