@@ -35,7 +35,7 @@ const remove = async (req, res) => {
   const { id } = req.params;
 
   if (isNaN(+id)) {
-    return res.sendStatus(404);
+    return res.sendStatus(400);
   }
 
   try {
@@ -64,22 +64,26 @@ const create = async (req, res) => {
     return res.sendStatus(400);
   }
 
-  const user = await usersServices.getOne(+userId);
+  try {
+    const user = await usersServices.getOne(+userId);
 
-  if (!user) {
-    return res.sendStatus(404);
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    const expense = await expensesServices.create({
+      userId,
+      spentAt,
+      title,
+      amount,
+      category,
+      note,
+    });
+
+    res.status(201).send(expense);
+  } catch (error) {
+    res.sendStatus(500);
   }
-
-  const expense = await expensesServices.create({
-    userId,
-    spentAt,
-    title,
-    amount,
-    category,
-    note,
-  });
-
-  res.status(201).send(expense);
 };
 
 const update = async (req, res) => {

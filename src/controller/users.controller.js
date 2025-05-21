@@ -74,7 +74,11 @@ const update = async (req, res) => {
   }
 
   try {
-    const [, updatedUser] = await usersService.update(name, id);
+    const [isUpdated, updatedUser] = await usersService.update(name, id);
+
+    if (isUpdated === 0) {
+      return res.sendStatus(404);
+    }
 
     res.send(updatedUser[0]);
   } catch (error) {

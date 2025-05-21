@@ -65,7 +65,9 @@ const getAll = (query) => {
   }
 
   if (categories) {
-    search.category = categories;
+    search.category = {
+      [Op.in]: Array.isArray(categories) ? categories : [categories],
+    };
   }
 
   if (from || to) {
